@@ -1,0 +1,59 @@
+﻿@using PlanningPoker.Models
+@model Estimation
+
+@{
+    ViewBag.Title = "_DisplayableEstimate";
+}
+
+
+@switch (Model)
+{
+    case Estimation.coffeecup:
+    @*<div class="estimate"><img src="~/Content/Icons/coffeecup_big.png" class="estimate center-block img-responsive" /></div>*@
+    <div class="icon-estimate"><i class="fa fa-coffee"></i></div>
+        break;
+    case Estimation.eight:
+    <div class="estimate number-estimate">8</div>
+        break;
+    case Estimation.five:
+    <div class="estimate number-estimate">5</div>
+        break;
+    case Estimation.fourty:
+    <div class="estimate number-estimate">40</div>
+        break;
+    case Estimation.half:
+    <div class="estimate number-estimate">1/2</div>
+        break;
+    case Estimation.infinite:
+    @*<div class="estimate"><img src="~/Content/Icons/infinity_big.png" class="estimate center-block img-responsive" /></div>*@
+    <div class="icon-estimate"><i class="fa fa-signal"></i></div>
+        break;
+    case Estimation.one:
+    <div class="estimate number-estimate">1</div>
+        break;
+    case Estimation.onehundred:
+    <div class="estimate number-estimate">100</div>
+        break;
+    case Estimation.questionmark:
+    @*<div class="estimate"><img src="~/Content/Icons/question_big.png" class="estimate center-block img-responsive" /></div>*@
+    <div class="icon-estimate"><i class="fa fa-question"></i></div>
+        break;
+    case Estimation.thirteen:
+    <div class="estimate number-estimate">13</div>
+        break;
+    case Estimation.three:
+    <div class="estimate number-estimate">3</div>
+        break;
+    case Estimation.twenty:
+    <div class="estimate number-estimate">20</div>
+        break;
+    case Estimation.two:
+    <div class="estimate number-estimate">2</div>
+        break;
+    case Estimation.zero:
+    <div class="estimate number-estimate">0</div>
+        break;
+    default:
+    <div></div>
+        break;
+}

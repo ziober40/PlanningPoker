@@ -1,0 +1,120 @@
+﻿@model PlanningPoker.Models.VotingNotFinishedModel
+@Scripts.Render("~/bundles/jquery")
+
+
+@section navigationBar
+{
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("See Estimates", "Index", "Result", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Estimate Now!", "Submit", "Result", new { NewEstimate = 1, team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("People count", "SetAmount", "Result", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Rules", "Index", "Rules", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+        </ul>
+    </div>
+}
+
+<h1>Estimation not finished - please wait</h1>
+
+<br/>
+
+<div id="list" style="display: none;">
+    @foreach (var item in Model.Team.Results)
+    {
+        @Html.DisplayFor(modelItem => item.Nickname) if (Model.Team.Results.Count() > 1 && Model.Team.Results.Last() != item)
+                                                     {<text>, </text>}
+    }
+</div>
+<div>There are <strong id="peopleVoted">@Model.PeopleVoted</strong> out of <strong id="maximum">@Model.Maximum</strong> people that have estimated so far.</div>
+<br />
+<div id="voted">
+    @foreach (var item in Model.Team.Results)
+    {
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 btn btn-info" >
+        <div> @item.Nickname </div>
+        <div> 
+        <div class="icon-estimate">
+        <i class="fa fa-question"></i>
+        </div>
+        </div>
+        </div>
+    }
+</div>
+
+
+
+<input type="hidden" id="message" />
+<input type="hidden" id="sendmessage" value="Send" />
+<input type="hidden" id="displayname" />
+<ul id="discussion"></ul>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.0.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/Script.js"></script>
+    <script>
+        var teamNameInHtml = encodeToHtml('@Model.Team.Name');
+
+        var chat = $.connection.chatHub;
+        var teamName = decodeAmpersand('@Model.Team.Name');
+        var reloadReceived = false;
+        var list = $('#list').html().split(", ");
+
+        chat.client.voted = function(number, team) {
+            if (teamName == team) {
+                $('#peopleVoted').html(number);
+            }
+        };
+
+        chat.client.nextestimate = function(team) {
+            if (teamName == team && reloadReceived == false) {
+                reloadReceived = true;
+                $.connection.hub.stop();
+                window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&team=" + teamNameInHtml;
+            }
+        };
+
+        chat.client.everyonehasvoted = function(team) {
+            if (teamName == team && reloadReceived == false) {
+                reloadReceived = true;
+                $.connection.hub.stop();
+                window.location.href = "@Url.Action("Index", "Result")?name=" + '@Model.Name' + "&team=" + teamNameInHtml;
+            }
+        };
+
+        chat.client.maximum = function(maximum, team) {
+            if (teamName == team) {
+                $('#maximum').html(maximum);
+            }
+        };
+
+        chat.client.votedpeoplesofar = function(voted, team) {
+            if (teamName == team) {
+                var temp = voted.split(", ");
+                if (list.join() != temp.join()) {
+                    var htmlString = "";
+                    $.each(temp, function(index, obj) {
+                            htmlString = htmlString.concat("<div class=\"col-xs-6 col-sm-4 col-md-3 col-lg-2 btn btn-info\" >" +
+                                "<div>" + obj + "</div>" +
+                                "<div> " +
+                                "<div class=\"icon-estimate\">" +
+                                "<i class=\"fa fa-question\"></i>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>");
+                    });
+                    $('#voted').html(htmlString);
+                    list = temp;
+                }
+            }
+        };
+
+        $.connection.hub.start();
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
+}
+

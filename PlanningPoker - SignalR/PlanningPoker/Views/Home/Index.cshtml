@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PlanningPoker.Models.Team>
+      
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="row">
+
+    <h1>GM&T Planning poker</h1>
+    <br />
+    <br />
+    <dl class="form-group">
+        <dt>
+            Enter your name:
+        </dt>
+    </dl>
+    <input class="lead" type="text" id="name">
+    <div class="alert" id="alertMessage" style="display: none">
+        <strong>Warning!</strong> the name must be not empty!
+    </div>
+    <dl class="form-group">
+        <dt>
+            Select your team:
+        </dt>
+    </dl>
+        @foreach (var item in Model)
+        {
+            if(item.Name == "Default")
+            {
+                item.Name = "PLAY";
+            }
+            
+            <a class="col-lg-12 col-md-12 col-xs-12 TeamLink btn btn-default">
+                <h4 id="name" class="text-center">@item.Name</h4>
+               
+            </a>
+        }
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/Script.js"></script>
+    <script>
+        $('#name').val(localStorage.getItem("name"));
+
+        if ($('#name').val() == null) {
+            $('#name').val(getCookie("name"));
+        }
+
+        $('.TeamLink').click(function() {
+
+            var teamname = encodeToHtml($(this).find("#name").html());
+            if (teamname == "PLAY") {
+                teamname = "Default";
+            }
+
+            if ($('#name').val() == "") {
+                $('#alertMessage').show("fast");
+            } else {
+                window.location.href = "@Url.Action("Submit", "Result")?name=" + $('#name').val() + "&team=" + teamname;
+            }
+        });
+
+    </script>
+}

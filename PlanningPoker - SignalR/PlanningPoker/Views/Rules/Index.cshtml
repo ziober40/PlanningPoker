@@ -1,0 +1,25 @@
+﻿@section navigationBar
+{
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("See Estimates", "Index", "Result", new { team = @ViewBag.Message}, null)</li>
+            <li>@Html.ActionLink("Estimate Now!", "Submit", "Result", new { NewEstimate = 1, team = @ViewBag.Message }, null)</li>
+            <li>@Html.ActionLink("People count", "SetAmount", "Result", new { team = @ViewBag.Message }, null)</li>
+            <li>@Html.ActionLink("Rules", "Index", "Rules", new { team = @ViewBag.Message }, null)</li>
+        </ul>
+    </div>
+}
+
+
+<h2>Planning Poker Rules</h2>
+<div class="well">
+    <ul>
+        <li>The product owner or customer reads the item to be estimated</li>
+        <li>The item is discussed</li>
+        <li>Each estimator privately estimates</li>
+        <li>Once every person has estimated, all estimates are revealed</li>
+        <li>If everyone placed the same estimate, that’s the final estimate</li>
+        <li>If estimates are not the same, the group discusses the estimates, focusing especially on any outlying values (lowest and highest)</li>
+        <li>Repeat until all estimates are the same</li>
+    </ul>
+</div>

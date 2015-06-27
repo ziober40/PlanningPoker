@@ -1,0 +1,36 @@
+﻿@model PlanningPoker.Models.SetAmountModel
+           
+@section navigationBar
+{
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("See Estimates", "Index", "Result", new { team = @Model.TeamName, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Estimate Now!", "Submit", "Result", new { NewEstimate = 1, team = @Model.TeamName, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("People count", "SetAmount", "Result", new { team = @Model.TeamName, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Rules", "Index", "Rules", new { team = @Model.TeamName, name = @Model.Name }, null)</li>
+        </ul>
+    </div>
+}
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    
+ 
+    <fieldset>
+        <legend>Count of People in Team <strong>@Model.TeamName</strong></legend>
+
+        @Html.HiddenFor(model => model.TeamName, new { value = @Model.TeamName })
+        
+        Amount of people estimating in the team
+        <div class="form-group">
+           
+            @Html.EditorFor(model => model.SetAmount)
+            @Html.ValidationMessageFor(model => model.SetAmount)
+        </div>
+
+        <p>
+            <input class="btn btn-default" type="submit" value="Save" />
+        </p>
+    </fieldset>
+}

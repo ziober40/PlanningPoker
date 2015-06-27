@@ -1,0 +1,55 @@
+﻿@using PlanningPoker.Models
+@model ReturnModel
+
+
+@section navigationBar
+{
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("See Estimates", "Index", "Result", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Estimate Now!", "Submit", "Result", new { NewEstimate = 1, team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("People count", "SetAmount", "Result", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Rules", "Index", "Rules", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+        </ul>
+    </div>
+}
+<h2>Estimate Agreed by Everyone</h2>
+<div class="text-center">
+    @Html.Partial("_DisplayResult", Model.Team.Results.FirstOrDefault().Estimate)
+    @Html.ActionLink("Next estimate", "Submit", "Result", new { NewEstimate = 1, team = @Model.Team.Name, name = @Model.Name }, new { @class = "btn btn-info" })
+</div>
+
+
+
+<div class="text-estimate">
+    @foreach (var item in Model.Team.Results)
+    {
+        @Html.DisplayFor(modelItem => item.Nickname) if (Model.Team.Results.Count() > 1 && Model.Team.Results.Last() != item)
+                                                     {<text>, </text>}
+    }
+</div>
+<br/>
+
+
+
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.0.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/Script.js"></script>
+    <script>
+    var chat = $.connection.chatHub;
+    var teamNameInHtml = encodeToHtml('@Model.Team.Name');
+    var teamName = decodeAmpersand('@Model.Team.Name');
+    var nextEstimateAlreadyReceived = false;
+
+    chat.client.nextestimate = function (team) {
+        if (teamName == team && nextEstimateAlreadyReceived == false) {
+            nextEstimateAlreadyReceived = true;
+            $.connection.hub.stop();
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&team=" + teamNameInHtml;
+        }
+    };
+
+    $.connection.hub.start();
+    </script>
+}

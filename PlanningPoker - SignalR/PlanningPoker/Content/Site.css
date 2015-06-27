@@ -1,0 +1,162 @@
+﻿body {
+    padding-top: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    height:100%;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/* Custom container */
+.container-full {
+  margin: 0 auto;
+  width: 100%;
+  min-height:100%;
+  overflow:hidden;
+}
+
+
+@media all and (max-width: 300px) {
+
+
+    .text-estimate {
+        font-size: 20px;
+    }
+
+    .icon-estimate {
+        font-size: 40px;
+         height: 60px;
+    }
+
+    .number-estimate {
+        font-size: 40px;
+    }
+
+    .icon-estimate-big {
+        height: 100px;
+        font-size: 100px;
+    }
+
+    .number-estimate-big {
+        font-size: 100px;
+    }
+
+}
+@media all and (min-width: 300px) {
+    .estimate {
+        height: 120px;
+    }
+
+    .text-estimate {
+        font-size: 40px;
+    }
+
+    .icon-estimate {
+        height: 120px;
+        font-size: 80px;
+    }
+
+    .number-estimate {
+        font-size: 60px;
+    }
+
+    .text-estimate {
+        font-size: 40px;
+    }
+
+    .icon-estimate-big {
+        height: 200px;
+        font-size: 200px;
+    }
+
+    .number-estimate-big {
+        font-size: 150px;
+    }
+}
+
+
+@media all and (min-width: 600px) {
+    .icon-estimate {
+        height: 120px;
+        font-size: 90px;
+    }
+
+    .number-estimate {
+        font-size: 60px;
+    }
+
+    .text-estimate {
+        font-size: 60px;
+    }
+
+    .icon-estimate-big {
+        height: 400px;
+        font-size: 400px;
+    }
+
+    .number-estimate-big {
+        font-size: 400px;
+    }
+}
+
+@media all and (min-width: 800px) {
+    .icon-estimate {
+        height: 120px;
+        font-size: 90px;
+    }
+
+    .number-estimate {
+        font-size: 80px;
+    }
+
+    .text-estimate {
+        font-size: 80px;
+    }
+
+    .icon-estimate-big {
+        height: 400px;
+        font-size: 400px;
+    }
+
+    .number-estimate-big {
+        height: 500px;
+        font-size: 400px;
+    }
+}

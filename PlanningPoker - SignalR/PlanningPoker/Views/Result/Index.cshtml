@@ -1,0 +1,69 @@
+﻿@using PlanningPoker.Models
+@model ReturnModel
+
+           
+@section navigationBar
+{
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("See Estimates", "Index", "Result", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Estimate Now!", "Submit", "Result", new { NewEstimate = 1, team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("People count", "SetAmount", "Result", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Rules", "Index", "Rules", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+        </ul>
+    </div>
+}
+
+@if (Model.Team.Results.Count() != 0)
+{
+    <h2>Discuss highest and lowest</h2>
+    <br/>
+}
+else
+{
+    <br/>
+    <br/>
+}
+<div class="row">
+    @foreach (var item in Model.Team.Results)
+    {
+        var className = item.IsHighest ? "btn-success" : item.IsLowest ? "btn-danger" : "btn-default";
+            
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 btn @className" >
+            <div><b>@Html.DisplayFor(modelItem => item.Nickname)</b></div>
+            <div style="font-size:250%">
+                @Html.Partial("_DisplayableEstimate", item.Estimate)
+            </div>
+        </div>
+    }
+</div>
+<br />
+<br />
+<div>
+@Html.ActionLink("Next estimate", "Submit", "Result", new { NewEstimate = 1, team = @Model.Team.Name, name = @Model.Name }, new { @class = "btn btn-info" })
+</div>
+
+<br/>
+<br/>
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.0.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/Script.js"></script>
+    <script>
+    var chat = $.connection.chatHub;
+    var teamNameInHtml = encodeToHtml('@Model.Team.Name');
+    var teamName = decodeAmpersand('@Model.Team.Name');
+    var nextEstimateAlreadyReceived = false;    
+
+
+    chat.client.nextestimate = function (team) {
+        if (teamName == team && nextEstimateAlreadyReceived == false) {
+            nextEstimateAlreadyReceived = true;
+            $.connection.hub.stop();
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&team=" + teamNameInHtml;
+        }
+    };
+
+    $.connection.hub.start();
+</script>
+}

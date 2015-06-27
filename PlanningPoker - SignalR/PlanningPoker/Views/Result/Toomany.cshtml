@@ -1,0 +1,20 @@
+﻿@using PlanningPoker.Models
+@model ReturnModel
+           
+@section navigationBar
+{
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("See Estimates", "Index", "Result", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Estimate Now!", "Submit", "Result", new { NewEstimate = 1, team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("People count", "SetAmount", "Result", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Rules", "Index", "Rules", new { team = @Model.Team.Name, name = @Model.Name }, null)</li>
+        </ul>
+    </div>
+}
+
+
+<h2>It can't be more than @Model.Team.Amount estimates at one time!</h2>
+
+
+

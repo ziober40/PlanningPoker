@@ -1,0 +1,157 @@
+﻿@using PlanningPoker.Models
+@model SubmitModel
+
+@section navigationBar
+{
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("See Estimates", "Index", "Result", new { team = @Model.Team, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Estimate Now!", "Submit", "Result", new { NewEstimate = 1, team = @Model.Team, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("People count", "SetAmount", "Result", new { team = @Model.Team, name = @Model.Name }, null)</li>
+            <li>@Html.ActionLink("Rules", "Index", "Rules", new { team = @Model.Team, name = @Model.Name }, null)</li>
+        </ul>
+    </div>
+}
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <p class="lead">Hi <strong>@Model.Name</strong> - please submit your estimate for Team <strong>@Model.Team</strong></p>
+
+   
+
+
+        <a id="e0" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            0
+        </a>
+        <a id="e1" class=" btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            1
+        </a>
+        <a id="e2" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            2
+        </a>
+        <a id="e3" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            3
+        </a>
+        <a id="e5" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            5
+        </a>
+        <a id="e8" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            8
+        </a>
+        <a id="e13" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            13
+        </a>
+        <a id="e20" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            20
+        </a>
+        <a id="e40" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            40
+        </a>
+        <a id="e100" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 estimate number-estimate">
+            100
+        </a>
+        <a id="ecoffee" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 icon-estimate">
+            @*<img src="~/Content/Icons/coffeecup_big.png" class="estimate center-block img-responsive" />*@
+           <i class="fa fa-coffee"></i>
+        </a>
+        <a id="equestionmark" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 icon-estimate">
+            @*<img src="~/Content/Icons/question_big.png" class="estimate center-block img-responsive" />*@
+            <i class="fa fa-question"></i>
+        </a>
+        <a id="einfinite" class="btn btn-default col-xs-6 col-sm-4 col-md-3 col-lg-2 icon-estimate">
+            @*<img src="~/Content/Icons/infinity_big.png" class="estimate center-block img-responsive" />*@
+            <i class="fa fa-signal"></i>
+        </a>
+    }
+
+
+<br />
+<br />
+@section Rules{
+    <div class="well">
+        <table>
+            <tr>
+                <td><strong>0</strong></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>We should not do it</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-signal"></i></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>Way too big</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-question"></i></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>Not enough understanding</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-coffee"></i></td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>I need a Coffee Break!</td>
+            </tr>
+        </table>
+    </div>
+}
+@section Scripts{
+    <script src="~/Scripts/Script.js"></script>
+    <script>
+        var teamname = encodeToHtml('@Model.Team');
+
+        $('#ecoffee').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 1 + "&team=" + teamname;
+        });
+
+        $('#e0').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 3 + "&team=" + teamname;
+        });
+
+        $('#e1').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 5 + "&team=" + teamname;
+        });
+
+        $('#e2').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 6 + "&team=" + teamname;
+        });
+
+        $('#e3').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 7 + "&team=" + teamname;
+        });
+
+        $('#e5').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 8 + "&team=" + teamname;
+        });
+
+        $('#e8').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 9 + "&team=" + teamname;
+        });
+        
+        $('#e13').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 10 + "&team=" + teamname;
+        });
+
+        $('#e20').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 11 + "&team=" + teamname;
+        });
+
+        $('#e40').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 12 + "&team=" + teamname;
+        });
+
+        $('#e100').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 13 + "&team=" + teamname;
+        });
+
+        $('#einfinite').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 14 + "&team=" + teamname;
+        });
+
+        $('#equestionmark').click(function() {
+            window.location.href = "@Url.Action("Submit", "Result")?name=" + '@Model.Name' + "&estimation=" + 2 + "&team=" + teamname;
+        });
+
+        localStorage.setItem("name",'@Model.Name');
+    </script>
+}
